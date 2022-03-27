@@ -1,0 +1,351 @@
+<html>
+
+<head>
+   <title> YOUR NAME - Assignment</title>
+   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+
+
+   <style>
+      body {
+         font-family: sans-serif;
+      }
+   </style>
+</head>
+
+<body>
+   <table style="width: 1000px;" cellspacing="5" cellpadding="5">
+      <tbody>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Name:&nbsp;</strong></td>
+            <td style="vertical-align: top;">Conor Murphy</td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Student Number:</strong></td>
+            <td style="vertical-align: top;">20205251</td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Dataset description:</strong></td>
+            <td style="vertical-align: top;"> Broadway Performances 1985-2020 <a
+                  href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-28/readme.md">(source)</a>
+            </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Initial questions</strong></td>
+            <td style="vertical-align: top;">When is the best
+               time to go to a Broadway show, How has this changed over time and what factors contirbute to it</td>
+         </tr>
+      </tbody>
+   </table>
+   <hr />
+   <div id="vis"></div>
+   <hr />
+   <table style="width: 850px;" cellspacing="5" cellpadding="5">
+      <tbody>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Description:&nbsp;</strong></td>
+            <td style="vertical-align: top;">
+               This visualisation came about from a previous visualisation in Q2 where the consumer price index was used
+               to adjust the price of tickets to negate the effects of inflation. I started to wonder how the price of a
+               ticket has changed over time and later even considered when the best time is to go to a show in terms of
+               price. The Above visualisation answers both of those question. The X axis represents the year and when
+               zoomed on will go more granular to months and then dates. There are three line charts. Colour is used as
+               a channel. The three attributes encoded are the Average ticket price adjusted for inflation, the average
+               capacity of all shows on a day and the number of shows running on Broadway at the time. Visualisation is
+               interactive with the grey area acting as a brush selection, this allows the user to drill down further
+               into the data and for example select the period from 2018 to 2018, the precision of the brush selection
+               and its sliding ability allows for more control over other alternatives. Tooltips are also present as
+               when the full 20 years are in view some values can be difficult to observe from the axis alone, these
+               tool tops aid with retrieving information more precisely.
+            </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Insight:</strong></td>
+            <td style="vertical-align: top;">Some extremely interesting insights can be gained from this visualisation
+               and some reoccurring patterns become obvious. Firstly, when looking at the average capacity we can see
+               that there are two big drop offs, one which was discovered in question 1, this is the three week
+               Stagehand protest of 2007. The second major event is 911 which can be observed the effects of on
+               16/09/2001 where the average capacity at all shows was 42.5% compared to 76% the previous week. <br><br>
+               When looking at the number of shows we can observe a reoccurring pattern where the first peak in the
+               number of shows on Broadway is in April, from here a downward trend occurs till September and then then
+               peaks again in December, this cyclical trend repeats itself in a very similar pattern every year and
+               these ebbs and flows can be good signals when to go to a Broadway show. <br><br>
+               The most interesting observation is the inverse relationship between the number of shows on at a given
+               time and the average percentage capacity and ticket price. As the number of shows decreases the price of
+               a ticket and the average capacity at a show will increase. This makes sense as generally when supply
+               falls demand will increase. When looking at the month of January we can see the that, the prices are
+               generally the highest, this can be attributed to the Christmas holidays and over the twenty years the
+               highest average ticket value 167 dollars was recorded at this time, these spikes can be observed every
+               year around Christmas time. <br><br>
+               Another observation we can see is that the average price of a Broadway ticket in 2000 was around $80 this
+               has changed to around $115 in 2020 which is a considerable jump, this also accounts for inflation.
+               <br><br>
+               In Summary I would absolutely advice not attending Broadway shows In December or January unless you are
+               prepared to pay considerably more for a ticket, instead why not wait until March or September when prices
+               are far cheaper and there are more shows happening which also makes for more choice, there will also
+               generally be less people attending these shows with you which means you have a better chance of getting a
+               better seat, but at the end of the day even at their lowest Broadway tickets still cost on average 110
+               dollars, so start saving
+
+            </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Design considerations</strong></td>
+            <td style="vertical-align: top;">Initially I had planned to do a heatmap of each containing each year, but
+               this turned out to be problematic as the data is not recorded each day and instead in 7 day intervals
+               this means that there would be large gaps between different entries which looked terrible in a heatmap,
+               so this approach was not adopted. Aggregating based on date here also does not make sense as the day that
+               data is recorded changes so for example the week ending on 07/01/2020 would not be collected on the same
+               date the next year so the visualisation produced would not be accurate. If the data was published daily,
+               then a heatmap of the months and days would have been a nice visualisation. To combat this, I extracted
+               the week number from the date and aggregate the results in a heat map, this however just showed the
+               change in ticket price overall between the years and not the change between the months , meaning the
+               insights gained from the line plot were not gained here. There was not a clear difference between each
+               week.<br><br>
+               I also considered doing a dumbbell plot. This was decided against for two reasons firstly there were
+               three attributes that I wanted to display, and a dumbbell plot is more suited to 2 attributes, secondly
+               when dots are used for this range the overall visualisation becomes very clutters and the patterns can
+               become hard to decern over longer periods, so this approach was not adopted. <br><br>
+               Initially the range for analysis was from 1985 to 2020 but this was decided against as it made the
+               overall visualisation too cluttered so the range 2000-2020 was added. The range slider was chosen as it
+               can allow for more in depth analysis if required while still allowing for the patterns to be seen as a
+               whole, this was chosen over zooming using the chart itself as I found it difficult to be accurate when
+               using this functionality. <br><br>
+               I also tried the visualisation with a slider for selecting the year however this did not allow for
+               comparison between years and due to change blindness when the values on screen change it can become very
+               hard to keep track of specific locations, because of this the slider seemed like the more practical
+               approach.<br><br>
+               To maximise Accessibility a colour blind friendly pallet was used, the colours were selected from <a
+                  href=”http://jfly.iam.u-tokyo.ac.jp/color/”>here </a> . The three selected were Sky Blue, bluish Green
+                  and Orange as they are easily distinguishable from each other and by all people including those who
+                  are colour blind. <br><br>
+                  Tool tips were added to allow for more precise investigation on certain dates for example the user can
+                  see the impact of the 2007 strike by dragging their mouse over the area, which leads to greater
+                  accuracy .<br><br>
+
+
+            </td>
+         </tr>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Data filtering and transformation:&nbsp;</strong>
+            </td>
+            <td style="vertical-align: top;">A reasonable amount of data transformation was needed for this
+               visualisation, the same adjustments in question 2 were carried out on this dataset adjusting the price of
+               tickets using the consumer price index. The range for the analysis was set in Vega, but the rest of the
+               transformation was done using python. This original data set was in the format where each value was
+               stored in a separate column, to get this visualisation to work with the interactive line tooltip I had to
+               change all of these column values into rows so initially the data was in the format.<br><br>
+               <table cellspacing="5" cellpadding="5" , style="border: 1px solid black">
+                  <tbody>
+                     <tr>
+                        <td>Date</td>
+                        <td>Ticket price</td>
+                        <td>Capacity</td>
+                        <td>Num Shows</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2020</td>
+                        <td>100</td>
+                        <td>80</td>
+                        <td>28</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <br>
+               And I need it this format.<br><br>
+               <table cellspacing="5" cellpadding="5" , style="border: 1px solid black">
+                  <tbody>
+                     <tr>
+                        <td>Date</td>
+                        <td>type</td>
+                        <td>data</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2020</td>
+                        <td>ticket price</td>
+                        <td>100</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2020</td>
+                        <td>capacity</td>
+                        <td>80</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2020</td>
+                        <td>Num Shows</td>
+                        <td>28</td>
+                     </tr>
+                  </tbody>
+               </table><br><br>
+               This change was carried out, allwing for the use of the tooltip as it did not work with a standard
+               layered line chart. No other transformation measures were needed. The code can be
+               viewed in p3.py, the new dataset is also included as transformed.csv
+            </td>
+         </tr>
+      </tbody>
+   </table>
+   <script type="text/javascript">
+      var yourVlSpec = {
+         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+         "description": "Shows the relationship between horsepower and the number of cylinders using tick marks.",
+         "data": {
+            "url": "https://raw.githubusercontent.com/Conj28/Info_vis_vega/main/transfomed_data.csv"
+         },
+         "transform": [{
+            "filter": {
+               "timeUnit": "year",
+               "field": "date",
+               "gte": "2000"
+            }
+         }],
+         "title": {
+            "text": "Average Ticket Price 2000 - 2020",
+            "dy": 25,
+            "dx": 40,
+            "fontSize": 25,
+            "font": "Calibri"
+         },
+         "vconcat": [{
+            "encoding": {
+               "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "axis": {
+                     "title": null
+                  },
+                  "scale": {
+                     "domain": {
+                        "selection": "brush"
+                     }
+                  }
+               }
+            },
+            "layer": [{
+                  "mark": "line",
+                  "width": 1400,
+                  "height": 450,
+                  "encoding": {
+                     "y": {
+                        "field": "data",
+                        "type": "quantitative",
+                        "scale": {
+                           "domain": [10, 170]
+                        },
+                        "axis": {
+                           "tickCount": 17,
+                           "title": null
+                        }
+                     },
+                     "color": {
+                        "type": "ordinal",
+                        "field": "type",
+                        "scale": {
+                           "range": ["#e69d00", "#56b4e9", "#009e9b"]
+                        },
+                        "legend": {
+                           "direction": "horizontal",
+                           "orient": "bottom-right",
+                           "title": null,
+                           "labelFontSize": 12,
+                           "symbolSize": 120,
+                           "symbolStrokeWidth": 3
+                        }
+                     }
+                  },
+                  "layer": [{
+                        "mark": "line"
+                     },
+                     {
+                        "transform": [{
+                           "filter": {
+                              "selection": "info"
+                           }
+                        }],
+                        "mark": "point"
+                     }
+                  ]
+               },
+               {
+                  "transform": [{
+                     "pivot": "type",
+                     "value": "data",
+                     "groupby": ["date"]
+                  }],
+                  "mark": "rule",
+                  "encoding": {
+                     "opacity": {
+                        "condition": {
+                           "value": 0.2,
+                           "selection": "info"
+                        },
+                        "value": 0
+                     },
+                     "tooltip": [{
+                           "field": "date",
+                           "type": "temporal",
+                           "title": "Date",
+                           "format": "%d/%m/%y"
+                        },
+                        {
+                           "field": "avg_ticket_price_cpi",
+                           "type": "quantitative",
+                           "title": "Avg Price",
+                           "format": ".2f"
+                        },
+                        {
+                           "field": "pct_capacity",
+                           "type": "quantitative",
+                           "title": "% Capacity",
+                           "format": ".2f"
+                        },
+                        {
+                           "field": "num_shows",
+                           "type": "quantitative",
+                           "title": "Num Shows",
+                           "format": ".0f"
+                        }
+                     ]
+                  },
+                  "selection": {
+                     "info": {
+                        "type": "single",
+                        "fields": ["date"],
+                        "nearest": true,
+                        "on": "mouseover",
+                        "empty": "none",
+                        "clear": "mouseout"
+                     }
+                  }
+               }
+            ]
+         }, {
+            "mark": "line",
+            "width": 1400,
+            "height": 30,
+            "view": {
+               "fill": "lightgray"
+            },
+            "selection": {
+               "brush": {
+                  "type": "interval",
+                  "encodings": ["x"]
+               }
+            },
+            "encoding": {
+               "x": {
+                  "field": "date",
+                  "type": "temporal"
+               },
+               "color": {
+                  "value": null
+               }
+            }
+         }]
+      }
+      vegaEmbed("#vis", yourVlSpec);
+   </script>
+</body>
+
+</html>

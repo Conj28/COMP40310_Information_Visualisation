@@ -1,0 +1,195 @@
+<html>
+
+<head>
+   <title> YOUR NAME - Assignment</title>
+   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+
+   <style>
+      body {
+         font-family: sans-serif;
+      }
+   </style>
+</head>
+
+<body>
+   <table style="width: 850px;" cellspacing="5" cellpadding="5">
+      <tbody>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Name:&nbsp;</strong></td>
+            <td style="vertical-align: top;">Conor Murphy</td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Student Number:</strong></td>
+            <td style="vertical-align: top;">20205251</td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Dataset description:</strong></td>
+            <td style="vertical-align: top;"> Broadway Performances 1985-2020 <a
+                  href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-28/readme.md">(source)</a>
+            </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Initial questions</strong></td>
+            <td style="vertical-align: top;">What are the most popular shows from the past 20 years and how long did
+               they run for</td>
+         </tr>
+      </tbody>
+   </table>
+   <hr />
+   <div style="height:850px" id="vis"></div>
+   <hr />
+   <table style="width: 850px;" cellspacing="5" cellpadding="5">
+      <tbody>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Description:&nbsp;</strong></td>
+            <td style="vertical-align: top;">Shown above is a strip plot of Broadway performance data, the X axis is
+               encoded with the date in a range from 2000 to 2020. The Y axis is encoded with the theatre name, a strip
+               plot is then produced with each tick representing a week of the year, the combination of each tick form a
+               bar which can then be used to measure the length of time the show has been running for. Colour is used as
+               a channel which encodes the capacity of each theatre. This is used to signify how popular a show is. A
+               tooltip is present to show the name of the show in a specific theatre when hovered over, which allows for
+               more in dept analysis. </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Insight:</strong></td>
+            <td style="vertical-align: top;">Some interesting insights can be made from the above table, the first and
+               most glaring one is the large purple line straight down the centre of the visualisation in 2007. I was
+               confused when I initially saw this and after some investigation, I found that there was a 3 weeklong
+               strike in November know as the Stagehand strike which arose over contract issues, this causes multiple
+               shows to close causing the overall number of people attending to drop to 0, which is reflected in the
+               visualisation. When observing the length of the shows we can see that only three shows span the entire 20
+               years these being Chicago, the phantom of the Opera and The Lion King, many others span over 10 years.
+               When looking at the popularity of the show it is quite clear what shows are not popular this is indicated
+               by a short bar and a darker colour. The long running shows all clearly have good attendance except for
+               Chicago in the Ambassadors Theatre which has had its patches in and around 60%, which is surprising as
+               some shows have stopped with attendance numbers similar to this.
+               <br><br>What is nice about this visualisation it illustrates how when a show starts it generally will
+               have good attendance which then falls over a period of time until it hits around 50% the show is then
+               announced to presumably be cancelled, which causes the number of people attending to increases for the
+               last week or two before the show ends.<br><br>
+               Another striking observation is the sheer number of shows that do not succeed in the long run, the graph
+               Is littered with small spells of shows that only survive a few months. To have a long running show span
+               over a few year is clearly desirable and when a theatre has a show like this, it makes sense that they
+               keep performing as long as there is an audience as it means more money for them. Shows with near perfect
+               attendance are extremely rare, for example the Book of Mormon in the ford centre for performing Arts and
+               Hamilton in the Richard Rodgers theatre are rare occurrences of this. <br><br>
+               Overall, this visualisation informs us as to what the most popular shows have been in between 2000 and
+               2020, it is clear that when a show is not performing well theatres are pretty quick to cut it and start
+               again with a new one, this led to high level of show turnover with very few shows sticking it out for
+               over 5 years.
+            </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Design considerations</strong></td>
+            <td style="vertical-align: top;">There were not many alternatives that I considered for this visualisation.
+               I knew the x axis had to be time series data meaning that the number of sensible visualisations here was
+               limited. I considered using a line chart with the x axis showing the capacity and using colour as a
+               channel to signify the theatre, hoverer as there is around 40 theatre this would clearly be far to
+               cluttered and there would also not be enough colour variety for distinct lines. The stop start nature of
+               shows starting and ending would also make a line chart very unappealing.
+               <br><br>The range was selected as fitting over 35 years on the axis made it all a bit too squished and as
+               horizontal size is already an issue this would not be sensible. A smaller range was also not a good idea
+               as data is only collected every seven days so there is actually a gap in between each tick and when
+               zoomed in these gaps become glaringly obvious and it becomes difficult to determine a shows length, this
+               is also a reason why continuous bars are not used in place of ticks. A Horizontal bar chart was also
+               considered for each show running length in weeks with colour being used for the theatre name but there
+               are simply too many entries, and this also does not encode the capacity. Vertical space is also an issue
+               and I would prefer to have each bar be marginally larger but making the entire graph viewable on a single
+               screen is more important. I at one point considered adding aline graph under the stripe plot of the total
+               capacity of each show but decided against this I it did not necessarily add any greater insights and also
+               extended the vertical area of the visualisation, The legend is also included Horizontally to the upper
+               right to also save on the vertical area.
+               <br><br>For the colour selection I chose to use the viridis colour scheme, I chose a diverging colour
+               scheme as it offered a greater difference between ticks of similar value i.e 80% is clearly different to
+               60%, in this specific visualisation a sequential colour scheme simply did not add a great enough
+               difference between values and they all started to blend into the one colour, reducing the impact of the
+               colour channel. Viridis was also chosen as it is colour blind friendly.
+            </td>
+         </tr>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Data filtering and transformation:&nbsp;</strong>
+            </td>
+            <td style="vertical-align: top;">Little to no filtering was needed for this visualisation, the only changes
+               that were made were the years below 2000 were filtered out. One show that had no values recorded was also
+               removed as it was showing up as having 0 capacity although it was just an error in the dataset, which was
+               misleading. Other than that no significant changes were made.</td>
+         </tr>
+      </tbody>
+   </table>
+   <script type="text/javascript">
+      var yourVlSpec = {
+         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+         "description": "A graph of the Most Popular Theatre performances 2000-2020",
+         "data": {
+            "url": "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-28/grosses.csv"
+         },
+         "title": {
+            "text": "Most popular shows by theatre 2000-2020",
+            "fontSize": 25,
+            "font": "Calibri",
+            "anchor": "start",
+            "dx": 162
+         },
+         "transform": [{
+            "filter": {
+               "timeUnit": "year",
+               "field": "week_ending",
+               "gte": "2000"
+            }
+         }, {
+            "filter": {
+               "not": {
+                  "field": "show",
+                  "equal": "Young Frankenstein"
+               }
+            }
+         }],
+
+         "mark": "tick",
+         "width": 1200,
+         "height": 700,
+         "encoding": {
+            "x": {
+               "field": "week_ending",
+               "type": "temporal",
+               "axis": {
+                  "title": "Year"
+               }
+            },
+            "y": {
+               "field": "theatre",
+               "type": "ordinal",
+               "axis": {
+                  "title": null
+               }
+            },
+            "color": {
+               "field": "pct_capacity",
+               "type": "quantitative",
+               "scale": {
+                  "scheme": "viridis"
+               },
+               "legend": {
+                  "direction": "vertical",
+                  "orient": "right",
+                  "title": "% Capacity",
+                  "labelFontSize": 12,
+                  "symbolSize": 120,
+                  "symbolStrokeWidth": 3
+               }
+            },
+            "tooltip": {
+               "field": "show",
+               "type": "nominal"
+            }
+         }
+      }
+
+      vegaEmbed("#vis", yourVlSpec);
+   </script>
+</body>
+
+</html>

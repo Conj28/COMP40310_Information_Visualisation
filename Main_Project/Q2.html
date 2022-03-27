@@ -1,0 +1,372 @@
+<html>
+
+<head>
+   <title>CM Q2</title>
+   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+
+   <style>
+      body {
+         font-family: sans-serif;
+      }
+   </style>
+</head>
+
+<body>
+   <table style="width: 850px;" cellspacing="5" cellpadding="5">
+      <tbody>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Name:&nbsp;</strong></td>
+            <td style="vertical-align: top;">Conor Murphy</td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Student Number:</strong></td>
+            <td style="vertical-align: top;">20205251</td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Dataset description:</strong></td>
+            <td style="vertical-align: top;"> Broadway Performances 1985-2020 <a
+                  href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-28/readme.md">(source)</a>
+            </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Initial questions</strong></td>
+            <td style="vertical-align: top;">What is the relationship between ticket price and percentage of theatres
+               filled, do theatres prefer higher ticket prices or fuller theatres ? </td>
+         </tr>
+      </tbody>
+   </table>
+   <hr />
+   <div style="height:800px" id="vis"></div>
+   <hr />
+   <table style="width: 850px;" cellspacing="5" cellpadding="5">
+      <tbody>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Description:&nbsp;</strong></td>
+            <td style="vertical-align: top;">The Above scatter plot shows the relationship between the Average Ticket
+               Price, which is encoded on the X axis and the Average Capacity per show which is encoded on the Y axis. A
+               Tooltip is present which highlights the show’s name when hovered over. Above and to the right of the
+               scatter plot are histograms showing the distribution of the shows. both histograms are interactive and
+               can be brushed to get a more granular view of data at a certain range i.e., tickets with an average price
+               of 20-30 dollars and an average capacity of 60-65%. There is also the ability to select a specific
+               theatre from the drop down menu which will highlight all of the shows from that theatre. All Price values
+               are adjusted for inflation which is discussed in the data transformation section.</td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Insight:</strong></td>
+            <td style="vertical-align: top;">There are some very interesting insights present in the visualisation, the
+               most obvious one is that theatres prefer to have a fuller theatre and will lower their price accordingly
+               to achieve a higher percentage of people in attendance. The data is highly concentrated around the top
+               left of the graph with the most populate values on the histograms being at a price of between 60-70
+               dollars with an attendance of between 70-85%. Very few shows drop below the 50% capacity mark and these
+               that do are all on the lower end of the price range. We can also observe that generally only once a show
+               reaches 100% attendance will it then start to raise its ticket price with all of the shows above the $160
+               price range having an average capacity over 90%. The most popular show was removed from the graph as it
+               was such a drastic outlier, and it was Bruce Springsteen Live on Broadway with an average capacity of
+               100% and an average price of 520 dollars, this was just too severe of an outlier to include in the
+               visualisation. The Highest value show on the chart is Hamilton. Which was arguably the biggest Broadway
+               show in history, this show has an average ticket price of 260 dollars which is by far the highest among
+               shows and musicals, as a concert is the only one that is higher. When observing the top 10 highest shows
+               interestingly, some of the highest ticket prices come from live music performances and comedy shows with
+               some of the highest ones being “Hugh Jackman back on Broadway”, “Mel Brooks on Broadway” and “Dave
+               Chappelle: live on Broadway”? <br><br>
+               There is also another interesting show in the top left corner of the visualisation, the show is Comedy
+               Tonight with an average ticket price of only 20 dollars and a capacity of 120% (some shows will allow
+               people to stand), this is interesting as they have purposely chosen an extremely low price and as result
+               the theatre is absolutely packed every night, they could easily chose to increase their price until
+               capacity is at 100% but instead, they choose to keep price this low. Looking at the lower end of the
+               visualisation we can see the odd situations of shows like “Corpsel” and “Nerd” which have average ticket
+               prices of around 100 dollars with less than 25% capacity. Senator Joe and Prymate seem to be the least
+               popular shows with average capacity of less than 15%, it is safe to assume they were not running for
+               long. <br><br>
+               When looking at the theatres it is clear that no one theatre has a higher average price overall and it is
+               very much down to the individual shows to draw in the higher ticket prices. <br><br>
+               Overall, it is clear that Theatres would rather have a full theatre at a lower price point than a higher
+               ticket price with less people, prices should only increase once a certain level of capacity is maintained
+            </td>
+         </tr>
+         <tr>
+            <td style="vertical-align: top;"><strong>Design considerations</strong></td>
+            <td style="vertical-align: top;">Initially I was considering doing a binned heatmap, this seemed like a good
+               solution which it is, but I believe the Scatter plot with histograms has benefits over it. With the Heat
+               map it would only show distribution, it would not allow users to see what shows are where on the scale
+               i.e., could not see Hamilton as the most popular. This investigatory functionality is one of the main
+               reasons why I chose the scatter plot. The distribution benefits of a heatmap are still achieved in the
+               above visualisation as it shows the main distribution of binned values in histograms on both Axis. I
+               attempted to even layer the scatter plot on top of a heatmap but as the dots are quite tightly packed
+               together it negated the benefit of the heatmap as colours were not even discernible and made the overall
+               visualisation less impactful. <br><br>
+               Although this visualisation does contain two selections, I never intended for them to be the focus, both
+               brushing on the Axis and selecting theatres are nice additions and I decided to include them as they do
+               not take away from the overall visualisation. Brushing along the histograms was chosen over scrolling and
+               zooming as once moved it is extremely difficult to realign the axis with the histograms and precision is
+               also more difficult with zooming, more control is offered from brushing. The axis labels have
+               intentionally been left on the histogram to assist with brushing as the main x axis changes when this
+               occurs and as the values are quite far away on the scatter plot, I decided that it makes sense for them
+               to stay. <br><br>
+               I considered using colour to encode the theatres separately but as there are too many theatres this was
+               not sensible. One attribute that this dataset was definitely missing was type, it would have been very
+               insightful to see how music performances compared to comedies or musicals, however this was unfortunately
+               not encoded in the dataset. <br><br>
+               I believe that without the added information from being able to see the show’ name a lot of the insights
+               in the previous section are not possible. and the inclusion of the histograms makes this visualisation a
+               better choice over a heatmap as distribution can still be decoded from the histograms. <br><br>
+            </td>
+         </tr>
+         <tr>
+            <td style="width: 200px; vertical-align: top;"><strong>Data filtering and transformation:&nbsp;</strong>
+            </td>
+            <td style="vertical-align: top;">Quite a lot of data manipulation was needed to achieve this visualisation,
+               which I was unable to do in vega lite, as a result I opted to use python and the panda’s library to carry
+               out the more advanced transformations necessary. It does not make sense to compare the price of a
+               Broadway ticket from 1985 to one from 2020 due to inflation, to combat this I used the CPI (consumer
+               price Index) data set which was also provided the same author of the original dataset. The CPI is a
+               simply a measure of the change in price of goods and services over time. We all know that the price of
+               milk and bread was cheaper in 1985 but due to inflation the piece has risen over time. The same principle
+               applies to theatre tickets, a ticket in 1985 would be significantly cheaper than it is today but people
+               would also be earning significantly less. For example, the price a ticket to Wicked in September 2003 was
+               $60, In September 2020 the same show in the same theatre was around $100 dollars, one aspect of this is
+               that prices have risen but another aspect is down to inflation. To combat this and make
+               the comparison fair we can convert all prior ticket prices to what they would be worth as of March 2020.
+               More info on the CPI can be found <a
+                  href=”https://www.cso.ie/en/interactivezone/statisticsexplained/consumerpriceindex/whatisthecpi/”>
+                  here </a> The operations were carried out on the dataset. <ol>
+                  <li>The cpi data was merged to the existing dataset and the new average ticket price was generated
+                     using this.</li>
+                  <li>distinct shows of the same name that happened at different time periods and in different theatres
+                     were separated.
+                  <li>Shows were then grouped together by the show name</li>
+                  </ol>
+                  Although the second step seems like a small ordeal due to the layout of the data set it actually was a
+                  difficult undertaking. Take for example the show Macbeth, this was first on Broadway in 1988 in the
+                  Lyceum Theatre. It then ran in the music box theatre in 2000 before running again in the Lyceum in
+                  2008, it has two more performances in different theatres after that. If a group by operation was just
+                  carried out on the show it would bundle all of these shows together it would just roll up into one
+                  show even though it spanned across 20 years and was performed in different theatres, this was taken
+                  care of in python and all shows of the same name that are 28 days apart or in a different theatre are
+                  separated. You can confirm this by finding two instances of Macbeth when selecting the Lyceum theatre
+                  from the drop down. This change was minor to the overall visualisation but certainly increases the
+                  overall Accuracy and gives more confidence to the figures. These changes are viewable in the q2.py
+                  script
+            </td>
+         </tr>
+      </tbody>
+   </table>
+   <script type="text/javascript">
+      var yourVlSpec = {
+         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+         "description": "",
+         "data": {
+            "url": "https://raw.githubusercontent.com/Conj28/Info_vis_vega/main/broadway_grouped_cpi.csv"
+         },
+         "transform": [{
+            "filter": "datum.pct_capacity > 0.01"
+         }, {
+            "filter": "datum.avg_ticket_price_cpi < 500"
+         }],
+         "title": {
+            "text": "Average Ticket Price to Percentage of Theater Filled",
+            "dx": 40,
+            "fontSize": 25,
+            "font": "Calibri"
+         },
+         "vconcat": [{
+               "mark": "bar",
+               "width": 800,
+               "height": 120,
+               "selection": {
+                  "brush": {
+                     "type": "interval",
+                     "encodings": ["x"]
+                  }
+               },
+               "encoding": {
+                  "x": {
+                     "field": "avg_ticket_price_cpi",
+                     "type": "quantitative",
+                     "bin": {
+                        "maxbins": 30
+                     },
+                     "axis": {
+                        "title": null
+                     },
+                     "scale": {
+                        "domain": [0, 280]
+                     }
+                  },
+                  "y": {
+                     "aggregate": "count",
+                     "axis": {
+                        "title": null,
+                        "tickCount": 8
+                     }
+                  }
+               }
+            },
+            {
+               "hconcat": [{
+                  "selection": {
+                     "Select": {
+                        "type": "single",
+                        "on": "click",
+                        "fields": ["theatre"],
+                        "bind": {
+                           "input": "select",
+                           "options": ["Royale Theatre",
+                              "Studio 54",
+                              "Bernard B. Jacobs Theatre",
+                              "Gershwin Theatre",
+                              "Hudson Theatre",
+                              "Helen Hayes Theatre",
+                              "Eugene O'Neill Theatre",
+                              "Ford Center for the Performing Arts",
+                              "St. James Theatre",
+                              "Richard Rodgers Theatre",
+                              "Broadhurst Theatre",
+                              "Imperial Theatre",
+                              "Marquis Theatre",
+                              "Gerald Schoenfeld Theatre",
+                              "Walter Kerr Theatre",
+                              "Longacre Theatre",
+                              "Edison Theatre",
+                              "Sam S. Shubert Theatre",
+                              "Lyceum Theatre",
+                              "Lunt-Fontanne Theatre",
+                              "Ambassador Theatre",
+                              "American Airlines Theatre",
+                              "John Golden Theatre",
+                              "Plymouth Theatre",
+                              "Belasco Theatre",
+                              "Music Box Theatre",
+                              "Vivian Beaumont Theater",
+                              "Criterion Center Stage Right",
+                              "Ritz Theatre",
+                              "Brooks Atkinson Theatre",
+                              "Ethel Barrymore Theatre",
+                              "Circle in the Square Theatre",
+                              "Al Hirschfeld Theatre",
+                              "Booth Theatre",
+                              "Cort Theatre",
+                              "Neil Simon Theatre",
+                              "Biltmore Theatre",
+                              "Samuel J. Friedman Theatre",
+                              "Palace Theatre",
+                              "New Amsterdam Theatre",
+                              "Henry Miller's Theatre",
+                              "Nederlander Theatre",
+                              "Martin Beck Theatre",
+                              "Stephen Sondheim Theatre",
+                              "46th Street Theatre",
+                              "Jack Lawrence Theatre",
+                              "Winter Garden Theatre",
+                              "Broadway Theatre",
+                              "Virginia Theatre",
+                              "Minskoff Theatre",
+                              "Hilton Theatre",
+                              "Lyric Theatre",
+                              "Mark Hellinger Theatre",
+                              "Helen Hayes Theater",
+                              "August Wilson Theatre",
+                              "Foxwoods Theatre",
+                              "Comedy Theatre",
+                              "Majestic Theatre"
+                           ]
+                        }
+                     }
+                  },
+                  "mark": "circle",
+                  "width": 800,
+                  "height": 500,
+                  "encoding": {
+                     "x": {
+                        "field": "avg_ticket_price_cpi",
+                        "type": "quantitative",
+                        "scale": {
+                           "domain": {
+                              "selection": "brush"
+                           }
+                        },
+                        "axis": {
+                           "title": "Average Ticket Price",
+                           "titleFontSize": 15
+                        }
+                     },
+                     "y": {
+                        "field": "pct_capacity",
+                        "type": "quantitative",
+                        "scale": {
+                           "domain": {
+                              "selection": "brush1"
+                           }
+                        },
+                        "axis": {
+                           "title": "Average Percentage Capacity",
+                           "titleFontSize": 15,
+                           "tickCount": 18
+                        }
+                     },
+                     "tooltip": {
+                        "field": "show",
+                        "type": "nominal"
+                     },
+                     "shape": {
+                        "value": "circle"
+                     },
+                     "color": {
+                        "condition": {
+                           "selection": "Select",
+                           "value": "#e69d00"
+                        },
+                        "value": "grey"
+                     },
+                     "opacity": {
+                        "condition": {
+                           "selection": "Select",
+                           "value": 1
+                        },
+                        "value": 0.05
+                     }
+                  }
+               }, {
+                  "mark": "bar",
+                  "width": 120,
+                  "height": 500,
+                  "selection": {
+                     "brush1": {
+                        "type": "interval",
+                        "encodings": ["y"]
+                     }
+                  },
+                  "encoding": {
+                     "x": {
+                        "aggregate": "count",
+                        "axis": {
+                           "title": null,
+                           "tickCount": 8
+                        }
+                     },
+                     "y": {
+                        "field": "pct_capacity",
+                        "bin": {
+                           "maxbins": 40
+                        },
+                        "axis": {
+                           "title": null,
+                           "tickCount": 18
+                        },
+                        "scale": {
+                           "domain": [0.1, 1.3]
+                        }
+                     }
+                  }
+               }]
+            }
+         ]
+      }
+      vegaEmbed("#vis", yourVlSpec);
+   </script>
+</body>
+
+</html>
