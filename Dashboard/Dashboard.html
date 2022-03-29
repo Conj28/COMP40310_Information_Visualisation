@@ -1,0 +1,274 @@
+<html>
+
+<head>
+   <title>CM Q2</title>
+   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+
+   <style>
+      body {
+         font-family: sans-serif;
+      }
+   </style>
+</head>
+
+<body>
+   <hr />
+   <div style="height:900px" id="vis"></div>
+   <hr />
+   <script type="text/javascript">
+      var yourVlSpec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "https://raw.githubusercontent.com/colmr/vis_class/master/FakeAccomodationDetails.csv"
+    },
+    "title": {
+        "text": "Exploring Irish Accomodation",
+        "fontSize": 30,
+        "anchor": "middle"
+    },
+    "vconcat": [
+        {
+            "hconcat": [
+                {
+                    "layer": [
+                        {
+                            "data": {
+                                "url": "https://gist.githubusercontent.com/carsonfarmer/9791524/raw/b27ca0d78d46a84664fe7ef709eed4f7621f7a25/irish-counties-segmentized.topojson",
+                                "format": {
+                                    "type": "topojson",
+                                    "feature": "counties"
+                                }
+                            },
+                            "projection": {
+                                "type": "conicConformal"
+                            },
+                            "mark": "geoshape",
+                            "height": 700,
+                            "width": 600,
+                            "mark": {
+                                "type": "geoshape",
+                                "fill": "lightgray",
+                                "stroke": "white"
+                            }
+                        },
+                        {
+                            "projection": {
+                                "type": "conicConformal"
+                            },
+                            "mark": "circle",
+                            "params": [
+                                {
+                                    "name": "types",
+                                    "select": {
+                                        "type": "point",
+                                        "fields": [
+                                            "Type"
+                                        ]
+                                    },
+                                    "bind": "legend"
+                                }
+                            ],
+                            "encoding": {
+                                "longitude": {
+                                    "field": "Longitude",
+                                    "type": "quantitative"
+                                },
+                                "latitude": {
+                                    "field": "Latitude",
+                                    "type": "quantitative"
+                                },
+                                "color": {
+                                    "field": "Type",
+                                    "type": "nominal",
+                                    "scale": {
+                                        "domain": [
+                                            "Hotel",
+                                            "B & B",
+                                            "Camping",
+                                            "Self Catering",
+                                            "Hostel"
+                                        ],
+                                        "range": [
+                                            "#009e73",
+                                            "#e69d00",
+                                            "#0072b2",
+                                            "#56b4e9",
+                                            "#cc79a7"
+                                        ]
+                                    },
+                                    "legend": {
+                                        "orient": "top-left",
+                                        "labelFontSize": 16,
+                                        "titleFontSize": 18
+                                    }
+                                },
+                                "href": {
+                                    "field": "Url",
+                                    "type": "ordinal"
+                                },
+                                "tooltip": [
+                                    {
+                                        "field": "Name"
+                                    },
+                                    {
+                                        "field": "Type"
+                                    },
+                                    {
+                                        "field": "Telephone"
+                                    }
+                                ]
+                            },
+                            "transform": [
+                                {
+                                    "filter": {
+                                        "param": "capSlider"
+                                    }
+                                },
+                                {
+                                    "filter": {
+                                        "param": "countySelect"
+                                    }
+                                },
+                                {
+                                    "filter": {
+                                        "param": "types"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "mark": "bar",
+                    "height": 700,
+                    "width": 120,
+                    "params": [
+                        {
+                            "name": "countySelect",
+                            "select": {
+                                "type": "point",
+                                "fields": [
+                                    "AddressRegion"
+                                ]
+                            }
+                        }
+                    ],
+                    "encoding": {
+                        "x": {
+                            "aggregate": "count",
+                            "axis": {
+                                "title": "Total Accommodations",
+                                "titleFontSize": 14,
+                                "labelFontSize": 12
+                            }
+                        },
+                        "y": {
+                            "field": "AddressRegion",
+                            "type": "ordinal",
+                            "sort": "-x",
+                            "axis": {
+                                "title": null
+                            }
+                        },
+                        "color": {
+                            "condition": {
+                                "param": "countySelect",
+                                "field": "Type"
+                            },
+                            "value": "lightgray"
+                        },
+                        "order": {
+                            "aggregate": "count",
+                            "field": "Type",
+                            "type": "quantitative",
+                            "sort": "descending"
+                        }
+                    },
+                    "transform": [
+                        {
+                            "filter": {
+                                "param": "capSlider"
+                            }
+                        },
+                        {
+                            "filter": {
+                                "param": "types"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "mark": "tick",
+            "width": 820,
+            "height": 40,
+            "params": [
+                {
+                    "name": "capSlider",
+                    "select": {
+                        "type": "interval",
+                        "encodings": [
+                            "x"
+                        ]
+                    }
+                }
+            ],
+            "encoding": {
+                "x": {
+                    "field": "Capacity",
+                    "type": "quantitative",
+                    "scale": {
+                        "domain": [
+                            0,
+                            400
+                        ]
+                    }
+                },
+                "color": {
+                    "condition": {
+                        "param": "capSlider",
+                        "field": "Type",
+                        "scale": {
+                            "domain": [
+                                "Hotel",
+                                "B & B",
+                                "Camping",
+                                "Self Catering",
+                                "Hostel"
+                            ],
+                            "range": [
+                                "#009e73",
+                                "#e69d00",
+                                "#0072b2",
+                                "#56b4e9",
+                                "#cc79a7"
+                            ]
+                        }
+                    },
+                    "value": "lightgray"
+                }
+            },
+            "transform": [
+                {
+                    "filter": {
+                        "param": "countySelect"
+                    }
+                },
+                {
+                    "filter": {
+                        "param": "types"
+                    }
+                }
+            ]
+        }
+    ]
+}
+      vegaEmbed("#vis", yourVlSpec);
+   </script>
+</body>
+
+</html>
